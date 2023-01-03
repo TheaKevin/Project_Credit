@@ -10,7 +10,7 @@ function App() {
 
   const getData = async () => {
     try {
-      const res = await fetch('http://localhost:8080/');
+      const res = await fetch("http://localhost:8080");
       const data = await res.json();
       setData(data);
     }
