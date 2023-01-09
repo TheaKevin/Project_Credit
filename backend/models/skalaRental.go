@@ -3,7 +3,7 @@ package models
 import "time"
 
 type SkalaRentalTab struct {
-	Custcode      string    `json:"custcode" gorm:"not null; type: varchar(25); unique"`
+	Custcode      string    `json:"custcode" gorm:"not null; type: varchar(25);"`
 	Counter       int8      `json:"counter" gorm:"type:smallint"`
 	Osbalance     string    `json:"osbalance"  gorm:"type:money"`
 	EndBalance    string    `json:"end_balance"  gorm:"type:money"`
