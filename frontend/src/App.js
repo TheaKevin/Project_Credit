@@ -1,37 +1,39 @@
 import './App.css';
-import {useState, useEffect} from 'react'
+import { useState } from 'react';
+import { Route, Switch, Redirect, Routes, HashRouter } from 'react-router-dom';
+import { FaBars, FaMoneyBill, FaRegClipboard, FaUserCircle } from 'react-icons/fa';
+import { Sidebar, Menu, MenuItem, SubMenu, useProSidebar } from 'react-pro-sidebar';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import sidebarBg from './assets/bg1.jpg'
+import { ChecklistPencairan } from './pages/ChecklistPencairan';
 
 function App() {
-  const [data, setData] = useState(null);
-  const [error, setError] = useState(null);
-  useEffect(() => {
-    getData()
-  }, []);
-
-  const getData = async () => {
-    try {
-      const res = await fetch("http://localhost:8080");
-      const data = await res.json();
-      setData(data);
-    }
-    catch (error) {
-      setError(error);
-    }
-  }
-
-  if (error) {
-    return <div>Failed to load {error.toString()}</div>
-  }
-
-  if (!data) {
-    return <div>Loading...</div>
-  }
+  const { collapseSidebar } = useProSidebar();
 
   return (
-    <div>
-      <p>data: {data.message}</p>
+    <div style={{ display: 'flex', height: '768px' }}>
+      <HashRouter>
+        <Sidebar image={sidebarBg}>
+          <Menu>
+            <MenuItem icon={<FaBars/>} onClick={() => collapseSidebar()} />
+            <SubMenu label="Transaksi" icon={<FaMoneyBill />}>
+              <MenuItem> Checklist Pencairan </MenuItem>
+            </SubMenu>
+            <MenuItem icon={<FaRegClipboard/>}> Laporan </MenuItem>
+            <SubMenu label="User" icon={<FaUserCircle/>}>
+              <MenuItem> Change Password </MenuItem>
+              <MenuItem> Logout </MenuItem>
+            </SubMenu>
+          </Menu>
+        </Sidebar>
+        <main>
+          <Routes>
+            <Route path="/" element={ <ChecklistPencairan  /> }/>
+          </Routes>
+        </main>
+      </HashRouter>
     </div>
-  )
+  );
 }
 
 export default App;
