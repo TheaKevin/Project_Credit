@@ -1,6 +1,6 @@
 import './App.css';
 import { useState } from 'react';
-import { Route, Switch, Redirect, Routes, HashRouter } from 'react-router-dom';
+import { Route, Switch, Redirect, Routes, HashRouter, Link } from 'react-router-dom';
 import { FaBars, FaMoneyBill, FaRegClipboard, FaUserCircle } from 'react-icons/fa';
 import { Sidebar, Menu, MenuItem, SubMenu, useProSidebar } from 'react-pro-sidebar';
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -17,7 +17,7 @@ function App() {
           <Menu>
             <MenuItem icon={<FaBars/>} onClick={() => collapseSidebar()} />
             <SubMenu label="Transaksi" icon={<FaMoneyBill />}>
-              <MenuItem> Checklist Pencairan </MenuItem>
+              <MenuItem routerLink={<Link to="/" />}> Checklist Pencairan </MenuItem>
             </SubMenu>
             <MenuItem icon={<FaRegClipboard/>}> Laporan </MenuItem>
             <SubMenu label="User" icon={<FaUserCircle/>}>
