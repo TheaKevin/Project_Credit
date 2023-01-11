@@ -9,6 +9,7 @@ import (
 
 type Repository interface {
 	GetTransaction() ([]Result, error)
+	UpdateTransaction(req []DataRequest) error
 }
 
 type repository struct {
@@ -51,4 +52,15 @@ func (r *repository) GetTransaction() ([]Result, error) {
 		return nil, res.Error
 	}
 	return results, nil
+}
+
+func (r *repository) UpdateTransaction(req []DataRequest) error {
+	for _, req := range req {
+		res := r.db.Table("customer_data_tab").Where("custcode = ?", req.Custcode).Update("approval_status", "0")
+		if res.Error != nil {
+			log.Println("Update Data error : ", res.Error)
+			return res.Error
+		}
+	}
+	return nil
 }

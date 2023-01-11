@@ -7,6 +7,7 @@ import (
 
 type Service interface {
 	GetTransaction() ([]Result, int, error)
+	UpdateTransaction(req []DataRequest) (int, error)
 }
 type service struct {
 	repo Repository
@@ -22,4 +23,13 @@ func (s *service) GetTransaction() ([]Result, int, error) {
 		return nil, http.StatusInternalServerError, err
 	}
 	return transaction, http.StatusOK, nil
+}
+
+func (s *service) UpdateTransaction(req []DataRequest) (int, error) {
+	err := s.repo.UpdateTransaction(req)
+	if err != nil {
+		log.Println("Internal server error : ", err)
+		return http.StatusInternalServerError, err
+	}
+	return http.StatusOK, nil
 }

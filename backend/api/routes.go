@@ -11,7 +11,7 @@ import (
 func (s *server) SetupRouter() {
 	s.Router.Use(cors.New(cors.Config{
 		AllowOrigins: []string{"*"},
-		AllowMethods: []string{"POST", "DELETE", "PUT", "GET"},
+		AllowMethods: []string{"POST", "DELETE", "PUT", "GET", "PATCH"},
 		AllowHeaders: []string{"*"},
 	}))
 
@@ -29,5 +29,6 @@ func (s *server) SetupRouter() {
 	transactionService := transaction.NewService(transactionRepo)
 	transactionHandler := transaction.NewHandler(transactionService)
 	s.Router.GET("/", transactionHandler.GetTransaction)
+	s.Router.PATCH("/updateTransaction", transactionHandler.UpdateTransaction)
 
 }
