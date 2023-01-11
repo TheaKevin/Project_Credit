@@ -3,6 +3,7 @@ package api
 import (
 	"project_credit_sinarmas/backend/controllers/skalaAngsuran"
 	"project_credit_sinarmas/backend/controllers/stagingCustomer"
+	"project_credit_sinarmas/backend/controllers/transaction"
 
 	"github.com/gin-contrib/cors"
 )
@@ -23,5 +24,10 @@ func (s *server) SetupRouter() {
 	saService := skalaAngsuran.NewService(saRepo)
 	saHandler := skalaAngsuran.NewHandler(saService)
 	s.Router.GET("/sa", saHandler.GenerateSkalaAngsuran)
+
+	transactionRepo := transaction.NewRepository(s.DB)
+	transactionService := transaction.NewService(transactionRepo)
+	transactionHandler := transaction.NewHandler(transactionService)
+	s.Router.GET("/", transactionHandler.GetTransaction)
 
 }

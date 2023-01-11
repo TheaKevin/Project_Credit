@@ -11,7 +11,7 @@ function App() {
   const { collapseSidebar } = useProSidebar();
 
   return (
-    <div style={{ display: 'flex', height: '768px' }}>
+    <div style={{ display: 'flex', height: '100%' }}>
       <HashRouter>
         <Sidebar image={sidebarBg}>
           <Menu>

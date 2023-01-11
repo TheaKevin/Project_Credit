@@ -25,7 +25,7 @@ func NewRepository(db *gorm.DB) *repository {
 func (r *repository) GenerateSkalaAngsuran() ([]models.CustomerDataTab, error) {
 	var customer []models.CustomerDataTab
 	var loan models.LoanDataTab
-	res := r.db.Where("approval_status = ?", "9").Find(&customer)
+	res := r.db.Where("approval_status = ?", "0").Find(&customer)
 	if res.Error != nil {
 		log.Println("Get Data error : ", res.Error)
 		return nil, res.Error
