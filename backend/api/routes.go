@@ -28,7 +28,8 @@ func (s *server) SetupRouter() {
 	transactionRepo := transaction.NewRepository(s.DB)
 	transactionService := transaction.NewService(transactionRepo)
 	transactionHandler := transaction.NewHandler(transactionService)
-	s.Router.GET("/", transactionHandler.GetTransaction)
+	s.Router.GET("/getTransaction", transactionHandler.GetTransaction)
+	s.Router.GET("/getTransactionFilter", transactionHandler.GetTransactionFilter)
 	s.Router.PATCH("/updateTransaction", transactionHandler.UpdateTransaction)
 
 }
