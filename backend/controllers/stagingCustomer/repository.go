@@ -160,12 +160,12 @@ func (r *repository) GetStagingCustomer() ([]models.StagingCustomer, error) {
 			fmt.Println(err)
 		}
 
-		drawDownDate, err := time.Parse("2006-01-02 15:04:05", item.LoanTglPk)
+		drawDownDate, err := time.Parse("2006-01-02", item.LoanTglPk)
 		if err != nil {
 			fmt.Println(err)
 		}
 
-		LoanTglPkChanneling, err := time.Parse("2006-01-02 15:04:05", item.LoanTglPkChanneling)
+		LoanTglPkChanneling, err := time.Parse("2006-01-02", item.LoanTglPkChanneling)
 		if err != nil {
 			fmt.Println(err)
 		}
