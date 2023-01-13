@@ -1,6 +1,7 @@
 package api
 
 import (
+	"project_credit_sinarmas/backend/controllers/report"
 	"project_credit_sinarmas/backend/controllers/skalaAngsuran"
 	"project_credit_sinarmas/backend/controllers/stagingCustomer"
 	"project_credit_sinarmas/backend/controllers/transaction"
@@ -31,5 +32,11 @@ func (s *server) SetupRouter() {
 	s.Router.GET("/getTransaction", transactionHandler.GetTransaction)
 	s.Router.GET("/getTransactionFilter", transactionHandler.GetTransactionFilter)
 	s.Router.PATCH("/updateTransaction", transactionHandler.UpdateTransaction)
+
+	reportRepo := report.NewRepository(s.DB)
+	reportService := report.NewService(reportRepo)
+	reportHandler := report.NewHandler(reportService)
+	s.Router.GET("/getReport", reportHandler.GetReport)
+	s.Router.GET("/getReportFilter", reportHandler.GetReportFilter)
 
 }
