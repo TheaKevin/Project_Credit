@@ -71,21 +71,21 @@ export const ChecklistPencairan = () => {
     return (
         <div className='d-flex flex-column w-100'>
             <Form onSubmit={(e) => handleSubmit(e)} className="d-flex flex-row justify-content-between mb-4">
-                <Form.Group className='d-flex flex-row align-items-center mx-3 w-75 justify-content-between'>
-                    <Form.Group className='d-flex flex-row align-items-center mx-3'>
+                <Form.Group className='d-flex flex-row align-items-center mx-3 w-100 justify-content-between'>
+                    <Form.Group className='d-flex flex-row align-items-center'>
                         <Form.Label>Branch</Form.Label>
                         <Form.Select value={activeBranch} onChange={(e) => setActiveBranch(e.target.value)} >
                             {
                                 branch? (
                                     branch.map((value, key) =>
-                                        <option key={key}>{value.code}</option>
+                                        <option key={key} value={value.code}>{value.code} - {value.description}</option>
                                     )
                                 ) : null
                             }
                         </Form.Select>
                     </Form.Group>
 
-                    <Form.Group className='d-flex flex-row align-items-center mx-3'>
+                    <Form.Group className='d-flex flex-row align-items-center'>
                         <Form.Label>Company</Form.Label>
                         <Form.Select value={activeCompany} onChange={(e) => setActiveCompany(e.target.value)} >
                             {
@@ -98,7 +98,7 @@ export const ChecklistPencairan = () => {
                         </Form.Select>
                     </Form.Group>
 
-                    <Form.Group className='d-flex flex-row align-items-center mx-3'>
+                    <Form.Group className='d-flex flex-row align-items-center'>
                         <Form.Label htmlFor='startDate'>Start</Form.Label>
                         <Form.Control
                             type='date'
@@ -107,7 +107,7 @@ export const ChecklistPencairan = () => {
                             onChange={(e) => setStart(new Date(e.target.value))} />
                     </Form.Group>
 
-                    <Form.Group className='d-flex flex-row align-items-center mx-3'>
+                    <Form.Group className='d-flex flex-row align-items-center'>
                         <Form.Label htmlFor='endDate'>End</Form.Label>
                         <Form.Control
                             type='date'
@@ -116,8 +116,11 @@ export const ChecklistPencairan = () => {
                             onChange={(e) => setEnd(new Date(e.target.value))} />
                     </Form.Group>
                 </Form.Group>
-                <Form.Group className='d-flex flex-row gap-3 w-25 justify-content-end'>
-                    <button onClick={() => getTransactionData()}>Reset</button>
+                <Form.Group className='d-flex flex-row gap-3 justify-content-end'>
+                    <button onClick={(e) => {
+                        e.preventDefault()
+                        getTransactionData()
+                    }}>Reset</button>
                     <button type='submit'>Submit</button>
                 </Form.Group>
             </Form>
