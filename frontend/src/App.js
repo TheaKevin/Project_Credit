@@ -6,12 +6,13 @@ import { Sidebar, Menu, MenuItem, SubMenu, useProSidebar } from 'react-pro-sideb
 import 'bootstrap/dist/css/bootstrap.min.css'
 import sidebarBg from './assets/bg1.jpg'
 import { ChecklistPencairan } from './pages/ChecklistPencairan';
+import { Laporan } from './pages/Laporan';
 
 function App() {
   const { collapseSidebar } = useProSidebar();
 
   return (
-    <div style={{ display: 'flex', height: '100%' }}>
+    <div style={{ display: 'flex' }}>
       <HashRouter>
         <Sidebar image={sidebarBg}>
           <Menu>
@@ -19,16 +20,17 @@ function App() {
             <SubMenu label="Transaksi" icon={<FaMoneyBill />}>
               <MenuItem routerLink={<Link to="/" />}> Checklist Pencairan </MenuItem>
             </SubMenu>
-            <MenuItem icon={<FaRegClipboard/>}> Laporan </MenuItem>
+            <MenuItem icon={<FaRegClipboard/>} routerLink={<Link to="/Laporan" />}> Laporan </MenuItem>
             <SubMenu label="User" icon={<FaUserCircle/>}>
               <MenuItem> Change Password </MenuItem>
               <MenuItem> Logout </MenuItem>
             </SubMenu>
           </Menu>
         </Sidebar>
-        <main>
+        <main className='w-100 mx-5 my-3'>
           <Routes>
             <Route path="/" element={ <ChecklistPencairan  /> }/>
+            <Route path="/Laporan" element={ <Laporan  /> }/>
           </Routes>
         </main>
       </HashRouter>

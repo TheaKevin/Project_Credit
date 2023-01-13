@@ -69,46 +69,54 @@ export const ChecklistPencairan = () => {
     }
     
     return (
-        <div className='d-flex flex-column'>
-            <Form onSubmit={(e) => handleSubmit(e)} className="d-flex flex-row w-100">
-                <Form.Group className='w-100 d-flex flex-row justify-content-between'>
-                    <Form.Label>Branch</Form.Label>
-                    <Form.Select value={activeBranch} onChange={(e) => setActiveBranch(e.target.value)} >
-                        {
-                            branch? (
-                                branch.map((value, key) =>
-                                    <option key={key}>{value.code}</option>
-                                )
-                            ) : null
-                        }
-                    </Form.Select>
+        <div className='d-flex flex-column w-100'>
+            <Form onSubmit={(e) => handleSubmit(e)} className="d-flex flex-row justify-content-between mb-4">
+                <Form.Group className='d-flex flex-row align-items-center mx-3 w-75 justify-content-between'>
+                    <Form.Group className='d-flex flex-row align-items-center mx-3'>
+                        <Form.Label>Branch</Form.Label>
+                        <Form.Select value={activeBranch} onChange={(e) => setActiveBranch(e.target.value)} >
+                            {
+                                branch? (
+                                    branch.map((value, key) =>
+                                        <option key={key}>{value.code}</option>
+                                    )
+                                ) : null
+                            }
+                        </Form.Select>
+                    </Form.Group>
 
-                    <Form.Label>Company</Form.Label>
-                    <Form.Select value={activeCompany} onChange={(e) => setActiveCompany(e.target.value)} >
-                        {
-                            company? (
-                                company.map((value, key) =>
-                                    <option key={key}>{value.company_short_name}</option>
-                                )
-                            ) : null
-                        }
-                    </Form.Select>
+                    <Form.Group className='d-flex flex-row align-items-center mx-3'>
+                        <Form.Label>Company</Form.Label>
+                        <Form.Select value={activeCompany} onChange={(e) => setActiveCompany(e.target.value)} >
+                            {
+                                company? (
+                                    company.map((value, key) =>
+                                        <option key={key}>{value.company_short_name}</option>
+                                    )
+                                ) : null
+                            }
+                        </Form.Select>
+                    </Form.Group>
 
-                    <Form.Label htmlFor='startDate'>Start</Form.Label>
-                    <Form.Control
-                        type='date'
-                        id='startDate'
-                        name='startDate'
-                        onChange={(e) => setStart(new Date(e.target.value))} />
+                    <Form.Group className='d-flex flex-row align-items-center mx-3'>
+                        <Form.Label htmlFor='startDate'>Start</Form.Label>
+                        <Form.Control
+                            type='date'
+                            id='startDate'
+                            name='startDate'
+                            onChange={(e) => setStart(new Date(e.target.value))} />
+                    </Form.Group>
 
-                    <Form.Label htmlFor='endDate'>End</Form.Label>
-                    <Form.Control
-                        type='date'
-                        id='endDate'
-                        name='endDate'
-                        onChange={(e) => setEnd(new Date(e.target.value))} />
+                    <Form.Group className='d-flex flex-row align-items-center mx-3'>
+                        <Form.Label htmlFor='endDate'>End</Form.Label>
+                        <Form.Control
+                            type='date'
+                            id='endDate'
+                            name='endDate'
+                            onChange={(e) => setEnd(new Date(e.target.value))} />
+                    </Form.Group>
                 </Form.Group>
-                <Form.Group className='mt-3 d-flex flex-column justify-content-left gap-3'>
+                <Form.Group className='d-flex flex-row gap-3 w-25 justify-content-end'>
                     <button onClick={() => getTransactionData()}>Reset</button>
                     <button type='submit'>Submit</button>
                 </Form.Group>
@@ -149,7 +157,7 @@ export const ChecklistPencairan = () => {
                     }
                 </tbody>
             </Table>
-            <button onClick={() => updateTransaction()}>Approve</button>
+            <button className='align-self-end' onClick={() => updateTransaction()}>Approve</button>
         </div>
     )
 }
