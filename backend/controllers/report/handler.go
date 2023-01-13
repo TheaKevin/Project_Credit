@@ -25,7 +25,7 @@ type Query struct {
 }
 
 func (h *Handler) GetReport(c *gin.Context) {
-	transaction, status, err := h.Service.GetReport()
+	report, status, err := h.Service.GetReport()
 	if err != nil {
 		log.Println("Error handler Get : ", err)
 		c.JSON(status, gin.H{
@@ -54,7 +54,7 @@ func (h *Handler) GetReport(c *gin.Context) {
 
 	c.JSON(status, gin.H{
 		"message": "success",
-		"data":    transaction,
+		"data":    report,
 		"company": company,
 		"branch":  branch,
 	})
@@ -87,7 +87,7 @@ func (h *Handler) GetReportFilter(c *gin.Context) {
 	q.start = start
 	q.end = end
 
-	transaction, status, err := h.Service.GetReportFilter(q)
+	report, status, err := h.Service.GetReportFilter(q)
 	if err != nil {
 		log.Println("Error handler Get : ", err)
 		c.JSON(status, gin.H{
@@ -97,6 +97,6 @@ func (h *Handler) GetReportFilter(c *gin.Context) {
 	}
 	c.JSON(status, gin.H{
 		"message": "success",
-		"data":    transaction,
+		"data":    report,
 	})
 }
