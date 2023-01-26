@@ -1,11 +1,11 @@
 package models
 
-type userTab struct {
+type UserTab struct {
 	Username string `json:"username" gorm:"not null; type: varchar(100); unique"`
 	Email    string `json:"email" gorm:"not null; type: varchar(100); unique"`
 	Password string `json:"password" gorm:"type: varchar(100)"`
 }
 
-func (m *userTab) TableName() string {
+func (m *UserTab) TableName() string {
 	return "user_Tab"
 }

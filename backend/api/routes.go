@@ -1,6 +1,7 @@
 package api
 
 import (
+	"project_credit_sinarmas/backend/controllers/authentication"
 	"project_credit_sinarmas/backend/controllers/report"
 	"project_credit_sinarmas/backend/controllers/skalaAngsuran"
 	"project_credit_sinarmas/backend/controllers/stagingCustomer"
@@ -15,6 +16,11 @@ func (s *server) SetupRouter() {
 		AllowMethods: []string{"POST", "DELETE", "PUT", "GET", "PATCH"},
 		AllowHeaders: []string{"*"},
 	}))
+
+	loginRepo := authentication.NewRepository(s.DB)
+	loginService := authentication.NewService(loginRepo)
+	loginHandler := authentication.NewHandler(loginService)
+	s.Router.GET("/login", loginHandler.Login)
 
 	scRepo := stagingCustomer.NewRepository(s.DB)
 	scService := stagingCustomer.NewService(scRepo)
