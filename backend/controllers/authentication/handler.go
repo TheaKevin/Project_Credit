@@ -1,8 +1,7 @@
 package authentication
 
 import (
-	"log"
-	"net/http"
+	"fmt"
 
 	"github.com/gin-gonic/gin"
 )
@@ -17,19 +16,19 @@ func NewHandler(service Service) *Handler {
 
 func (h *Handler) Login(c *gin.Context) {
 	var req DataRequest
-	if err := c.ShouldBindJSON(&req); err != nil {
-		log.Println("Status Bad Request : ", err)
-		c.JSON(http.StatusBadRequest, gin.H{"message": "Error bad request"})
-		return
-	}
+	req.Email = c.Query("email")
+	req.Password = c.Query("password")
 
 	status, user, err := h.Service.Login(req)
 	if err != nil {
-		c.JSON(status, gin.H{"message": "Error bad request"})
+		fmt.Println(err)
+		c.JSON(status, gin.H{
+			"message": "Email atau password salah!",
+		})
+	} else {
+		c.JSON(status, gin.H{
+			"message": "success",
+			"user":    user,
+		})
 	}
-
-	c.JSON(status, gin.H{
-		"message": "success",
-		"user":    user,
-	})
 }

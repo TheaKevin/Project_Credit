@@ -21,7 +21,7 @@ func (s *service) Login(req DataRequest) (int, models.UserTab, error) {
 	user, err := s.repo.Login(req)
 	if err != nil {
 		log.Println("Internal server error : ", err)
-		return http.StatusInternalServerError, user, err
+		return http.StatusUnauthorized, user, err
 	}
 	return http.StatusOK, user, nil
 }

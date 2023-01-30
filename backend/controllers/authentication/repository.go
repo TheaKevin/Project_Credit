@@ -22,14 +22,14 @@ func NewRepository(db *gorm.DB) *repository {
 
 func (r *repository) Login(req DataRequest) (models.UserTab, error) {
 	var user models.UserTab
-	res := r.db.Table("user_tab").Where("email = ?", req.Email).First(&user)
+	res := r.db.Table("user_Tab").Where("email = ?", req.Email).First(&user)
 	if res.Error != nil {
 		log.Println("Get Data Error : ", res.Error)
-		return user, errors.New("Email atau password salah!")
+		return user, errors.New("email atau password salah")
 	}
 
 	if user.Password != req.Password {
-		return user, errors.New("Email atau password salah!")
+		return user, errors.New("email atau password salah")
 	}
 
 	return user, nil
