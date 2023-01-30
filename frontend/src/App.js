@@ -19,6 +19,8 @@ function App() {
 
   const handleLogOut = () => {
     localStorage.removeItem("info")
+    localStorage.removeItem("username")
+    localStorage.removeItem("email")
     window.location.href = "/"
   }
 
@@ -44,7 +46,7 @@ function App() {
                 <MenuItem routerLink={<Link to="/" />}> Checklist Pencairan </MenuItem>
               </SubMenu>
               <MenuItem icon={<FaRegClipboard/>} routerLink={<Link to="/Laporan" />}> Laporan </MenuItem>
-              <SubMenu label="User" icon={<FaUserCircle/>}>
+              <SubMenu label={localStorage.getItem("username")} icon={<FaUserCircle/>}>
                 <MenuItem> Change Password </MenuItem>
                 <MenuItem onClick={() => handleLogOut()}> Logout </MenuItem>
               </SubMenu>

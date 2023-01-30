@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React, { useState } from 'react'
 import logo from "../assets/logo.png"
 import "../style/Login.css"
@@ -10,12 +11,20 @@ export const Login = () => {
         const formData = new FormData(e.currentTarget)
         const alertWrongInput = document.getElementById('alertWrongInput')
 
-        if (formData.get("email") === "theakevin01@gmail.com" && formData.get("password") === "thea1234") {
-            localStorage.setItem("info", "true")
-            window.location.href = "/"
-        }else{
+        axios.get('http://localhost:8080/login?email='+formData.get("email")+'&password='+formData.get("password"))
+        .then(res => {
+            if(res.data.message === "success"){
+                alertWrongInput.classList.add("d-none");
+                localStorage.setItem("info", "true")
+                localStorage.setItem("username", res.data.user.username)
+                localStorage.setItem("email", res.data.user.email)
+                window.location.href = "/"
+            }
+        })
+        .catch(err => {
+            console.log(err.response.data.message)
             alertWrongInput.classList.remove("d-none");
-        }
+        })
     }
 
     return (
