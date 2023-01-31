@@ -10,6 +10,7 @@ import (
 
 type Repository interface {
 	Login(req DataRequest) (models.UserTab, error)
+	ChangePassword(pass Password) error
 }
 
 type repository struct {
@@ -33,4 +34,25 @@ func (r *repository) Login(req DataRequest) (models.UserTab, error) {
 	}
 
 	return user, nil
+}
+
+func (r *repository) ChangePassword(pass Password) error {
+	var user models.UserTab
+	res := r.db.Table("user_Tab").Where("email = ?", pass.Email).First(&user)
+	if res.Error != nil {
+		log.Println("Get Data Error : ", res.Error)
+		return res.Error
+	}
+
+	if user.Password != pass.OldPassword {
+		return errors.New("Password tidak sama")
+	} else {
+		res := r.db.Table("user_Tab").Where("email = ?", pass.Email).Update("password", pass.NewPassword)
+		if res.Error != nil {
+			log.Println("Update Data error : ", res.Error)
+			return res.Error
+		}
+	}
+
+	return nil
 }

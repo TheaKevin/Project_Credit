@@ -8,6 +8,7 @@ import (
 
 type Service interface {
 	Login(req DataRequest) (int, models.UserTab, error)
+	ChangePassword(pass Password) (int, error)
 }
 type service struct {
 	repo Repository
@@ -24,4 +25,13 @@ func (s *service) Login(req DataRequest) (int, models.UserTab, error) {
 		return http.StatusUnauthorized, user, err
 	}
 	return http.StatusOK, user, nil
+}
+
+func (s *service) ChangePassword(pass Password) (int, error) {
+	err := s.repo.ChangePassword(pass)
+	if err != nil {
+		log.Println("Internal server error : ", err)
+		return http.StatusUnauthorized, err
+	}
+	return http.StatusOK, nil
 }

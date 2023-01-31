@@ -17,10 +17,11 @@ func (s *server) SetupRouter() {
 		AllowHeaders: []string{"*"},
 	}))
 
-	loginRepo := authentication.NewRepository(s.DB)
-	loginService := authentication.NewService(loginRepo)
-	loginHandler := authentication.NewHandler(loginService)
-	s.Router.GET("/login", loginHandler.Login)
+	authRepo := authentication.NewRepository(s.DB)
+	authService := authentication.NewService(authRepo)
+	authHandler := authentication.NewHandler(authService)
+	s.Router.GET("/login", authHandler.Login)
+	s.Router.PATCH("/changePassword", authHandler.ChangePassword)
 
 	scRepo := stagingCustomer.NewRepository(s.DB)
 	scService := stagingCustomer.NewService(scRepo)
