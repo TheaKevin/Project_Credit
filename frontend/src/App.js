@@ -8,10 +8,14 @@ import sidebarBg from './assets/bg1.jpg'
 import { ChecklistPencairan } from './pages/ChecklistPencairan';
 import { Laporan } from './pages/Laporan';
 import { Login } from './pages/Login';
+import { ChangePasswordModal } from './pages/ChangePasswordModal';
 
 function App() {
   const { collapseSidebar } = useProSidebar();
-  const [isLoggedIn, setLogin] = useState()
+  const [isLoggedIn, setLogin] = useState();
+  const [changePasswordModal, setChangePasswordModal] = useState(false);
+  const openChangePasswordModal = () => setChangePasswordModal(true);
+  const closeChangePasswordModal = () => setChangePasswordModal(false);
 
   useEffect(() => {
     localStorage.getItem("info") != null ? setLogin(true) : setLogin(false)
@@ -47,7 +51,7 @@ function App() {
               </SubMenu>
               <MenuItem icon={<FaRegClipboard/>} routerLink={<Link to="/Laporan" />}> Laporan </MenuItem>
               <SubMenu label={localStorage.getItem("username")} icon={<FaUserCircle/>}>
-                <MenuItem> Change Password </MenuItem>
+                <MenuItem onClick={() => openChangePasswordModal()}> Change Password </MenuItem>
                 <MenuItem onClick={() => handleLogOut()}> Logout </MenuItem>
               </SubMenu>
             </Menu>
@@ -57,6 +61,8 @@ function App() {
               <Route path="/" element={ <ChecklistPencairan  /> }/>
               <Route path="/Laporan" element={ <Laporan  /> }/>
             </Routes>
+
+            <ChangePasswordModal closeChangePasswordModal={closeChangePasswordModal} changePasswordModal={changePasswordModal} email={localStorage.getItem("email")} />
           </main>
         </HashRouter>
       </div>
