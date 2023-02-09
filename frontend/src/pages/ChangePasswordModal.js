@@ -1,10 +1,29 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Modal } from 'react-bootstrap';
 import "../style/ChangePassword.css"
 
 export const ChangePasswordModal = (props) => {
     const [password, setPassword] = useState();
+
+    useEffect(() => {
+        if (password) {
+            const alertWrongInput = document.getElementById('alertWrongInput')
+
+            axios.patch('http://localhost:8080/changePassword', password)
+            .then(res => {
+                if(res.data.message === "success"){
+                    alertWrongInput.classList.add("d-none");
+                    alert("Success");
+                    setPassword(undefined)
+                }
+            })
+            .catch(err => {
+                document.getElementById("alertWrongInput").innerHTML = err.response.data.message;
+                alertWrongInput.classList.remove("d-none");
+            })
+        }
+    }, [password]);
 
     const handleChangePassword = (e) => {
         e.preventDefault();
@@ -23,17 +42,6 @@ export const ChangePasswordModal = (props) => {
                 Email:props.email,
                 OldPassword:formData.get("oldPassword"),
                 NewPassword:formData.get("newPassword")
-            })
-            axios.patch('http://localhost:8080/changePassword', password)
-            .then(res => {
-                if(res.data.message === "success"){
-                    alertWrongInput.classList.add("d-none");
-                    alert("Success");
-                }
-            })
-            .catch(err => {
-                console.log(err.response.data.message)
-
             })
         }
     }

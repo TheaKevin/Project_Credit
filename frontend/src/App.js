@@ -13,12 +13,14 @@ import { ChangePasswordModal } from './pages/ChangePasswordModal';
 function App() {
   const { collapseSidebar } = useProSidebar();
   const [isLoggedIn, setLogin] = useState();
+  const [screenHeight, setScreenHeight] = useState(0);
   const [changePasswordModal, setChangePasswordModal] = useState(false);
   const openChangePasswordModal = () => setChangePasswordModal(true);
   const closeChangePasswordModal = () => setChangePasswordModal(false);
 
   useEffect(() => {
-    localStorage.getItem("info") != null ? setLogin(true) : setLogin(false)
+    localStorage.getItem("info") != null ? setLogin(true) : setLogin(false);
+    setScreenHeight(window.innerHeight);
   }, [])
 
   const handleLogOut = () => {
@@ -41,10 +43,10 @@ function App() {
     );
   } else {
     return (
-      <div style={{ display: 'flex' }}>
+      <div style={{ display: 'flex', height: '100%', minHeight: screenHeight }}>
         <HashRouter>
           <Sidebar image={sidebarBg}>
-            <Menu>
+            <Menu transitionDuration={1000} renderExpandIcon={({ open }) => <span>{open ? '-' : '+'}</span>}>
               <MenuItem icon={<FaBars/>} onClick={() => collapseSidebar()} />
               <SubMenu label="Transaksi" icon={<FaMoneyBill />}>
                 <MenuItem routerLink={<Link to="/" />}> Checklist Pencairan </MenuItem>
