@@ -48,7 +48,7 @@ func (h *Handler) ChangePassword(c *gin.Context) {
 	if err != nil {
 		fmt.Println(err)
 		c.JSON(status, gin.H{
-			"message": "Password baru sama dengan password lama!",
+			"message": "Password lama berbeda dengan password yang sedang digunakan!",
 		})
 	} else {
 		c.JSON(status, gin.H{
