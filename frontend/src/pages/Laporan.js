@@ -48,7 +48,7 @@ export const Laporan = () => {
     }
     
     return (
-        <div className='d-flex flex-column w-100'>
+        <div className='d-flex flex-column w-100 px-5 pt-3'>
             <Form onSubmit={(e) => handleSubmit(e)} className="d-flex flex-row justify-content-between mb-4">
                 <Form.Group className='d-flex flex-row align-items-center mx-3 justify-content-between w-100'>
                     <Form.Group className='d-flex flex-row align-items-center'>

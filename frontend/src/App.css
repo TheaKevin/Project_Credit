@@ -29,14 +29,21 @@
 }
 
 .mainContainer{
-  background-color: #E6E6E6;
+  background: #f2efef;
+  background-image: url(./assets/logoBackground.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.menuSidebar{
+  color: black;
+}
+
+.logoSidebar{
+  width: 25px;
+}
+
+.titleSidebar{
+  font-size: 30px;
 }

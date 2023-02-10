@@ -69,7 +69,7 @@ export const ChecklistPencairan = () => {
     }
     
     return (
-        <div className='d-flex flex-column w-100'>
+        <div className='d-flex flex-column w-100 px-5 pt-3'>
             <Form onSubmit={(e) => handleSubmit(e)} className="d-flex flex-row justify-content-between mb-4">
                 <Form.Group className='d-flex flex-row align-items-center mx-3 w-100 justify-content-between'>
                     <Form.Group className='d-flex flex-row align-items-center'>
