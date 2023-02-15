@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 import Form from 'react-bootstrap/Form';
+import "../style/ChecklistPencairan.css"
 
 export const ChecklistPencairan = () => {
     const [transaction, setTransaction] = useState([])
@@ -70,59 +71,51 @@ export const ChecklistPencairan = () => {
     
     return (
         <div className='d-flex flex-column w-100 px-5 pt-3'>
-            <Form onSubmit={(e) => handleSubmit(e)} className="d-flex flex-row justify-content-between mb-4">
-                <Form.Group className='d-flex flex-row align-items-center mx-3 w-100 justify-content-between'>
-                    <Form.Group className='d-flex flex-row align-items-center'>
-                        <Form.Label>Branch</Form.Label>
-                        <Form.Select value={activeBranch} onChange={(e) => setActiveBranch(e.target.value)} >
-                            {
-                                branch? (
-                                    branch.map((value, key) =>
-                                        <option key={key} value={value.code}>{value.code} - {value.description}</option>
-                                    )
-                                ) : null
-                            }
-                        </Form.Select>
-                    </Form.Group>
+            <Form onSubmit={(e) => handleSubmit(e)} className="mb-4">
+                <div className='groupFilter'>
+                    <Form.Label className='branchLabel'>Branch</Form.Label>
+                    <Form.Select className='branchSelect' value={activeBranch} onChange={(e) => setActiveBranch(e.target.value)} >
+                        {
+                            branch? (
+                                branch.map((value, key) =>
+                                    <option key={key} value={value.code}>{value.code} - {value.description}</option>
+                                )
+                            ) : null
+                        }
+                    </Form.Select>
 
-                    <Form.Group className='d-flex flex-row align-items-center'>
-                        <Form.Label>Company</Form.Label>
-                        <Form.Select value={activeCompany} onChange={(e) => setActiveCompany(e.target.value)} >
-                            {
-                                company? (
-                                    company.map((value, key) =>
-                                        <option key={key}>{value.company_short_name}</option>
-                                    )
-                                ) : null
-                            }
-                        </Form.Select>
-                    </Form.Group>
+                    <Form.Label className='companyLabel'>Company</Form.Label>
+                    <Form.Select className='companySelect' value={activeCompany} onChange={(e) => setActiveCompany(e.target.value)} >
+                        {
+                            company? (
+                                company.map((value, key) =>
+                                    <option key={key}>{value.company_short_name}</option>
+                                )
+                            ) : null
+                        }
+                    </Form.Select>
 
-                    <Form.Group className='d-flex flex-row align-items-center'>
-                        <Form.Label htmlFor='startDate'>Start</Form.Label>
-                        <Form.Control
-                            type='date'
-                            id='startDate'
-                            name='startDate'
-                            onChange={(e) => setStart(new Date(e.target.value))} />
-                    </Form.Group>
+                    <Form.Label className='startLabel' htmlFor='startDate'>Start</Form.Label>
+                    <Form.Control className='startDate'
+                        type='date'
+                        id='startDate'
+                        name='startDate'
+                        onChange={(e) => setStart(new Date(e.target.value))} />
 
-                    <Form.Group className='d-flex flex-row align-items-center'>
-                        <Form.Label htmlFor='endDate'>End</Form.Label>
-                        <Form.Control
-                            type='date'
-                            id='endDate'
-                            name='endDate'
-                            onChange={(e) => setEnd(new Date(e.target.value))} />
-                    </Form.Group>
-                </Form.Group>
-                <Form.Group className='d-flex flex-row gap-3 justify-content-end'>
-                    <button onClick={(e) => {
+                    <Form.Label className='endLabel' htmlFor='endDate'>End</Form.Label>
+                    <Form.Control className='endDate'
+                        type='date'
+                        id='endDate'
+                        name='endDate'
+                        onChange={(e) => setEnd(new Date(e.target.value))} />
+
+                    <button className='resetButton' onClick={(e) => {
                         e.preventDefault()
                         getTransactionData()
                     }}>Reset</button>
-                    <button type='submit'>Submit</button>
-                </Form.Group>
+
+                    <button className='submitButton' type='submit'>Submit</button>
+                </div>
             </Form>
             <Table striped bordered hover>
                 <thead>

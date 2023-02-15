@@ -1,10 +1,9 @@
 import './App.css';
 import { useEffect, useState } from 'react';
-import { Route, Switch, Redirect, Routes, HashRouter, Link, Navigate } from 'react-router-dom';
-import { FaBars, FaMoneyBill, FaRegClipboard, FaUserCircle } from 'react-icons/fa';
+import { Route, Routes, HashRouter, Link, Navigate } from 'react-router-dom';
+import { FaMoneyBill, FaRegClipboard, FaUserCircle } from 'react-icons/fa';
 import { Sidebar, Menu, MenuItem, SubMenu, useProSidebar, menuClasses } from 'react-pro-sidebar';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import sidebarBg from './assets/bg1.jpg'
 import { ChecklistPencairan } from './pages/ChecklistPencairan';
 import { Laporan } from './pages/Laporan';
 import { Login } from './pages/Login';
