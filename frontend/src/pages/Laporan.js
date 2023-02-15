@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 import Form from 'react-bootstrap/Form';
+import "../style/Laporan.css"
 
 export const Laporan = () => {
     const [report, setReport] = useState([])
@@ -49,10 +50,10 @@ export const Laporan = () => {
     
     return (
         <div className='d-flex flex-column w-100 px-5 pt-3'>
-            <Form onSubmit={(e) => handleSubmit(e)} className="d-flex flex-row justify-content-between mb-4">
-                <Form.Group className='d-flex flex-row align-items-center mx-3 justify-content-between w-100'>
-                    <Form.Group className='d-flex flex-row align-items-center'>
-                        <Form.Label>Branch</Form.Label>
+            <Form onSubmit={(e) => handleSubmit(e)} className="mb-4">
+                <div className='groupFilterLaporan'>
+                    <Form.Group className='d-flex flex-row align-items-center branchLaporan'>
+                        <Form.Label className='me-2'>Branch</Form.Label>
                         <Form.Select value={activeBranch} onChange={(e) => setActiveBranch(e.target.value)} >
                             {
                                 branch? (
@@ -64,8 +65,8 @@ export const Laporan = () => {
                         </Form.Select>
                     </Form.Group>
 
-                    <Form.Group className='d-flex flex-row align-items-center'>
-                        <Form.Label>Company</Form.Label>
+                    <Form.Group className='d-flex flex-row align-items-center companyLaporan'>
+                        <Form.Label className='me-2'>Company</Form.Label>
                         <Form.Select value={activeCompany} onChange={(e) => setActiveCompany(e.target.value)} >
                             {
                                 company? (
@@ -77,16 +78,16 @@ export const Laporan = () => {
                         </Form.Select>
                     </Form.Group>
 
-                    <Form.Group className='d-flex flex-row align-items-center'>
-                        <Form.Label>Approval Status</Form.Label>
-                        <Form.Select value={status} onChange={(e) => setStatus(e.target.value)} >
+                    <Form.Group className='d-flex flex-row align-items-center approveLaporan'>
+                        <Form.Label className='me-2 w-50'>Approval Status</Form.Label>
+                        <Form.Select className='w-50' value={status} onChange={(e) => setStatus(e.target.value)} >
                             <option value={0}>0</option>
                             <option value={1}>1</option>
                         </Form.Select>
                     </Form.Group>
 
-                    <Form.Group className='d-flex flex-row align-items-center'>
-                        <Form.Label htmlFor='startDate'>Start</Form.Label>
+                    <Form.Group className='d-flex flex-row align-items-center startLaporan'>
+                        <Form.Label className='me-2' htmlFor='startDate'>Start</Form.Label>
                         <Form.Control
                             type='date'
                             id='startDate'
@@ -94,22 +95,22 @@ export const Laporan = () => {
                             onChange={(e) => setStart(new Date(e.target.value))} />
                     </Form.Group>
 
-                    <Form.Group className='d-flex flex-row align-items-center'>
-                        <Form.Label htmlFor='endDate'>End</Form.Label>
+                    <Form.Group className='d-flex flex-row align-items-center endLaporan'>
+                        <Form.Label className='me-2' htmlFor='endDate'>End</Form.Label>
                         <Form.Control
                             type='date'
                             id='endDate'
                             name='endDate'
                             onChange={(e) => setEnd(new Date(e.target.value))} />
                     </Form.Group>
-                </Form.Group>
-                <Form.Group className='d-flex flex-row gap-3 justify-content-end'>
-                    <button onClick={(e) => {
+                    
+                    <button className='resetButtonLaporan' onClick={(e) => {
                         e.preventDefault()
                         getReportData()
                     }}>Reset</button>
-                    <button type='submit'>Submit</button>
-                </Form.Group>
+
+                    <button className='submitButtonLaporan' type='submit'>Submit</button>
+                </div>
             </Form>
             <Table striped bordered hover>
                 <thead>
