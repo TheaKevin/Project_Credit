@@ -112,7 +112,7 @@ export const ChecklistPencairan = () => {
                     <button className='resetButton' onClick={(e) => {
                         e.preventDefault()
                         getTransactionData()
-                    }}>Reset</button>
+                    }}>All</button>
 
                     <button className='submitButton' type='submit'>Submit</button>
                 </div>

@@ -107,7 +107,7 @@ export const Laporan = () => {
                     <button className='resetButtonLaporan' onClick={(e) => {
                         e.preventDefault()
                         getReportData()
-                    }}>Reset</button>
+                    }}>All</button>
 
                     <button className='submitButtonLaporan' type='submit'>Submit</button>
                 </div>
