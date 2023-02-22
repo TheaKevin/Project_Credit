@@ -109,12 +109,12 @@ export const ChecklistPencairan = () => {
                         name='endDate'
                         onChange={(e) => setEnd(new Date(e.target.value))} />
 
-                    <button className='resetButton' onClick={(e) => {
+                    <button className='resetButton buttonPrimary' onClick={(e) => {
                         e.preventDefault()
                         getTransactionData()
                     }}>All</button>
 
-                    <button className='submitButton' type='submit'>Submit</button>
+                    <button className='submitButton buttonPrimary' type='submit'>Submit</button>
                 </div>
             </Form>
             <Table striped bordered hover>
@@ -153,7 +153,7 @@ export const ChecklistPencairan = () => {
                     }
                 </tbody>
             </Table>
-            <button className='align-self-end' onClick={() => updateTransaction()}>Approve</button>
+            <button className='align-self-end buttonPrimary' onClick={() => updateTransaction()}>Approve</button>
         </div>
     )
 }

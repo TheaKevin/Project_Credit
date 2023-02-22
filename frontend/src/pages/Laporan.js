@@ -104,12 +104,12 @@ export const Laporan = () => {
                             onChange={(e) => setEnd(new Date(e.target.value))} />
                     </Form.Group>
                     
-                    <button className='resetButtonLaporan' onClick={(e) => {
+                    <button className='resetButtonLaporan buttonPrimary' onClick={(e) => {
                         e.preventDefault()
                         getReportData()
                     }}>All</button>
 
-                    <button className='submitButtonLaporan' type='submit'>Submit</button>
+                    <button className='submitButtonLaporan buttonPrimary' type='submit'>Submit</button>
                 </div>
             </Form>
             <Table striped bordered hover>

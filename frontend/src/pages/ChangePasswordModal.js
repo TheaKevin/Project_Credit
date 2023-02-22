@@ -30,7 +30,16 @@ export const ChangePasswordModal = (props) => {
         const formData = new FormData(e.currentTarget)
         const alertWrongInput = document.getElementById('alertWrongInput')
 
-        if (formData.get("newPassword") !== formData.get("confirmPassword")) {
+        if (formData.get("oldPassword") === "") {
+            document.getElementById("alertWrongInput").innerHTML = "Password lama harus diisi!";
+            alertWrongInput.classList.remove("d-none");
+        } else if (formData.get("newPassword") === "") {
+            document.getElementById("alertWrongInput").innerHTML = "Password baru harus diisi!";
+            alertWrongInput.classList.remove("d-none");
+        } else if (formData.get("confirmPassword") === "") {
+            document.getElementById("alertWrongInput").innerHTML = "Confirm Password harus diisi!";
+            alertWrongInput.classList.remove("d-none");
+        } else if (formData.get("newPassword") !== formData.get("confirmPassword")) {
             document.getElementById("alertWrongInput").innerHTML = "Confirm Password tidak sama!";
             alertWrongInput.classList.remove("d-none");
         } else if (formData.get("newPassword") === formData.get("oldPassword")) {
@@ -77,7 +86,7 @@ export const ChangePasswordModal = (props) => {
                         </div>
 
                         <div className="d-flex justify-content-around">
-                            <button type="submit" className="btn btn-pertama w-50">
+                            <button type="submit" className="buttonPrimary w-50">
                                 Submit
                             </button>
                         </div>

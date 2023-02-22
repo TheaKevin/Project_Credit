@@ -54,7 +54,7 @@ export const Login = () => {
                             </div>
 
                             <div className="d-flex justify-content-around">
-                                <button type="submit" className="btn btn-pertama w-50">
+                                <button type="submit" className="buttonPrimary w-50">
                                 {isLogin ? "Sign in" : "Sign up"}
                                 </button>
                             </div>

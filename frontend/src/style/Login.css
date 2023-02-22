@@ -43,7 +43,7 @@
     opacity: 1 !important;
     transition: 0.3s;
     pointer-events: none;
-    background-color: #E6E6E6 !important;
+    background-image: linear-gradient(to right, rgb(208, 208, 208), rgb(212, 212, 212)) !important;
 }
 
 .input + .placeholder {
@@ -61,30 +61,9 @@
     color: #3700b3 !important;
 }
 
-.btn-pertama {
-    background-color: #3700b3 !important;
-    color: #fff !important;
-}
-
-.btn-outline-pertama {
-    background-color: #fff !important;
-    border: 1px solid #3700b3 !important;
-    color: #3700b3 !important;
-}
-
-.btn-outline-pertama:hover,
-.btn-active {
-    background-color: #3700b3 !important;
-    color: #fff !important;
-}
-
-.btn-pertama:hover {
-    background-color: #1f0163 !important;
-}
-
 .wrapper {
     border-radius: 2rem;
-    background-color: #E6E6E6;
+    background-image: linear-gradient(to right, rgb(206, 205, 205), rgb(230, 228, 228));
     color: #d9d9d9;
     box-shadow:
     2.8px 2.8px 2.2px rgba(0, 0, 0, 0.02),
