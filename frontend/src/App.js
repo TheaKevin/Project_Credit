@@ -45,7 +45,7 @@ function App() {
     return (
       <div style={{ display: 'flex', height: '100%', minHeight: screenHeight }}>
         <HashRouter>
-          <Sidebar backgroundColor="#CC0F0F"
+          <Sidebar backgroundColor="#CC0F0F" breakPoint='lg'
           rootStyles={{
             color: 'white',
           }}>

@@ -112,8 +112,8 @@ export const Laporan = () => {
                     <button className='submitButtonLaporan buttonPrimary' type='submit'>Submit</button>
                 </div>
             </Form>
-            <Table striped bordered hover>
-                <thead>
+            <Table striped bordered hover responsive>
+                <thead className='tableHeadWrapper'>
                     <tr>
                         <th>No.</th>
                         <th>PPK</th>

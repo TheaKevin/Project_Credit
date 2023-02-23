@@ -2,9 +2,11 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Modal } from 'react-bootstrap';
 import "../style/ChangePassword.css"
+import Swal from 'sweetalert2'
 
 export const ChangePasswordModal = (props) => {
     const [password, setPassword] = useState();
+    const [isLoading, setLoading] = useState(false);
 
     useEffect(() => {
         if (password) {
@@ -14,37 +16,51 @@ export const ChangePasswordModal = (props) => {
             .then(res => {
                 if(res.data.message === "success"){
                     alertWrongInput.classList.add("d-none");
-                    alert("Success");
-                    setPassword(undefined)
+                    Swal.fire({
+                        title: 'Success',
+                        text: 'Password berhasil diubah!',
+                        icon: 'success',
+                        timer: 5000,
+                    })
+                    setPassword(undefined);
                 }
+                setLoading(false);
+                props.closeChangePasswordModal();
             })
             .catch(err => {
                 document.getElementById("alertWrongInput").innerHTML = err.response.data.message;
                 alertWrongInput.classList.remove("d-none");
+                setLoading(false);
             })
         }
     }, [password]);
 
     const handleChangePassword = (e) => {
         e.preventDefault();
+        setLoading(true);
         const formData = new FormData(e.currentTarget)
         const alertWrongInput = document.getElementById('alertWrongInput')
 
         if (formData.get("oldPassword") === "") {
             document.getElementById("alertWrongInput").innerHTML = "Password lama harus diisi!";
             alertWrongInput.classList.remove("d-none");
+            setLoading(false);
         } else if (formData.get("newPassword") === "") {
             document.getElementById("alertWrongInput").innerHTML = "Password baru harus diisi!";
             alertWrongInput.classList.remove("d-none");
+            setLoading(false);
         } else if (formData.get("confirmPassword") === "") {
             document.getElementById("alertWrongInput").innerHTML = "Confirm Password harus diisi!";
             alertWrongInput.classList.remove("d-none");
+            setLoading(false);
         } else if (formData.get("newPassword") !== formData.get("confirmPassword")) {
             document.getElementById("alertWrongInput").innerHTML = "Confirm Password tidak sama!";
             alertWrongInput.classList.remove("d-none");
+            setLoading(false);
         } else if (formData.get("newPassword") === formData.get("oldPassword")) {
             document.getElementById("alertWrongInput").innerHTML = "Password lama tidak boleh sama dengan password baru!";
             alertWrongInput.classList.remove("d-none");
+            setLoading(false);
         } else {
             alertWrongInput.classList.add("d-none");
             setPassword({
@@ -86,8 +102,8 @@ export const ChangePasswordModal = (props) => {
                         </div>
 
                         <div className="d-flex justify-content-around">
-                            <button type="submit" className="buttonPrimary w-50">
-                                Submit
+                            <button type="submit" className="buttonPrimary w-50" disabled={isLoading}>
+                                {isLoading ? 'Loading…' : 'Submit'}
                             </button>
                         </div>
                     </form>

@@ -3,6 +3,7 @@ import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 import Form from 'react-bootstrap/Form';
 import "../style/ChecklistPencairan.css"
+import Swal from 'sweetalert2'
 
 export const ChecklistPencairan = () => {
     const [transaction, setTransaction] = useState([])
@@ -51,7 +52,16 @@ export const ChecklistPencairan = () => {
     }
 
     const updateTransaction = () => {
-        axios.patch('http://localhost:8080/updateTransaction', checked).then(() => getTransactionData())
+        axios.patch('http://localhost:8080/updateTransaction', checked)
+        .then(() => {
+            Swal.fire({
+                title: 'Success',
+                text: 'Pencairan berhasil disetujui!',
+                icon: 'success',
+                timer: 5000,
+            })
+            getTransactionData()
+        })
     }
 
     const handleSubmit = (e) => {
@@ -117,8 +127,8 @@ export const ChecklistPencairan = () => {
                     <button className='submitButton buttonPrimary' type='submit'>Submit</button>
                 </div>
             </Form>
-            <Table striped bordered hover>
-                <thead>
+            <Table striped bordered hover responsive>
+                <thead className='tableHeadWrapper'>
                     <tr>
                         <th>No.</th>
                         <th>PPK</th>
