@@ -12,15 +12,17 @@ import (
 
 func (s *server) SetupRouter() {
 	s.Router.Use(cors.New(cors.Config{
-		AllowOrigins: []string{"*"},
-		AllowMethods: []string{"POST", "DELETE", "PUT", "GET", "PATCH"},
-		AllowHeaders: []string{"*"},
+		AllowOrigins:     []string{"*"},
+		AllowMethods:     []string{"POST", "DELETE", "PUT", "GET", "PATCH"},
+		AllowHeaders:     []string{"*"},
+		AllowCredentials: true,
 	}))
 
 	authRepo := authentication.NewRepository(s.DB)
 	authService := authentication.NewService(authRepo)
 	authHandler := authentication.NewHandler(authService)
-	s.Router.GET("/login", authHandler.Login)
+	s.Router.POST("/login", authHandler.Login)
+	s.Router.GET("/user", authHandler.AuthenticateUser)
 	s.Router.PATCH("/changePassword", authHandler.ChangePassword)
 
 	scRepo := stagingCustomer.NewRepository(s.DB)
