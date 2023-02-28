@@ -11,18 +11,26 @@ export const Login = () => {
         const formData = new FormData(e.currentTarget)
         const alertWrongInput = document.getElementById('alertWrongInput')
 
-        axios.get('http://localhost:8080/login?email='+formData.get("email")+'&password='+formData.get("password"))
+        axios.post('http://localhost:8080/login', {
+            Email : formData.get("email"),
+            Password : formData.get("password")
+        }, {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            withCredentials: true
+        })
         .then(res => {
             if(res.data.message === "success"){
                 alertWrongInput.classList.add("d-none");
-                localStorage.setItem("info", "true")
-                localStorage.setItem("username", res.data.user.username)
-                localStorage.setItem("email", res.data.user.email)
+                // localStorage.setItem("info", "true")
+                // localStorage.setItem("username", res.data.user.username)
+                // localStorage.setItem("email", res.data.user.email)
                 window.location.href = "/"
             }
         })
         .catch(err => {
-            console.log(err.response.data.message)
+            console.log(err)
             alertWrongInput.classList.remove("d-none");
         })
     }

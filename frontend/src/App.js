@@ -9,25 +9,66 @@ import { Laporan } from './pages/Laporan';
 import { Login } from './pages/Login';
 import { ChangePasswordModal } from './pages/ChangePasswordModal';
 import logo from "./assets/logoSidebar.png"
+import axios from 'axios';
+import { Loading } from './pages/Loading';
 
 function App() {
   const { collapseSidebar } = useProSidebar();
+  const [loading, setLoading] = useState(true);
   const [isLoggedIn, setLogin] = useState();
+  const [name, setName] = useState("");
   const [screenHeight, setScreenHeight] = useState(0);
   const [changePasswordModal, setChangePasswordModal] = useState(false);
   const openChangePasswordModal = () => setChangePasswordModal(true);
   const closeChangePasswordModal = () => setChangePasswordModal(false);
 
   useEffect(() => {
-    localStorage.getItem("info") != null ? setLogin(true) : setLogin(false);
-    setScreenHeight(window.innerHeight);
+    (
+      async () => {
+        await axios.get('http://localhost:8080/user', {
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          withCredentials: true
+        })
+        .then(res => {
+          res.status === 200 ? loginSuccess(res.data.user.username) : setLogin(false);
+          setLoading(false)
+        })
+        .catch(error => {
+          setLogin(false);
+          setLoading(false)
+        });
+
+        setScreenHeight(window.innerHeight);
+      }
+    )();
   }, [])
 
-  const handleLogOut = () => {
-    localStorage.removeItem("info")
-    localStorage.removeItem("username")
-    localStorage.removeItem("email")
-    window.location.href = "/"
+  const loginSuccess = (username) => {
+    setLogin(true);
+    setName(username)
+  }
+
+  const handleLogOut = async () => {
+    await axios.post('http://localhost:8080/logout', {}, {
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      withCredentials: true
+    })
+    .then(res => {
+      setLogin(false);
+    })
+    .catch(error => {
+      setLogin(false);
+    });
+  }
+
+  if(loading){
+    return(
+      <Loading />
+    )
   }
 
   if (!isLoggedIn){
@@ -78,7 +119,7 @@ function App() {
                   },
                 },
               }}> Laporan </MenuItem>
-              <SubMenu className='subMenuSidebar' label={localStorage.getItem("username")} icon={<FaUserCircle/>}
+              <SubMenu className='subMenuSidebar' label={name} icon={<FaUserCircle/>}
               rootStyles={{
                 ['.' + menuClasses.button]: {
                   '&:hover': {
