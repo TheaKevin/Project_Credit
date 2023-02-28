@@ -28,7 +28,7 @@ func (h *Handler) Login(c *gin.Context) {
 	status, token, err := h.Service.Login(req)
 	if err != nil {
 		c.JSON(status, gin.H{
-			"message": "Email atau password salah!",
+			"message": err.Error(),
 		})
 	} else {
 		cookie := http.Cookie{
@@ -73,19 +73,35 @@ func (h *Handler) AuthenticateUser(c *gin.Context) {
 	if err != nil {
 		fmt.Println(err)
 		c.JSON(http.StatusUnauthorized, gin.H{
-			"message": "Password lama berbeda dengan password yang sedang digunakan!",
+			"message": err.Error(),
 		})
+		return
 	}
 
 	status, user, err := h.Service.AuthenticateUser(cookie)
 	if err != nil {
 		fmt.Println(err)
 		c.JSON(status, gin.H{
-			"message": "Password lama berbeda dengan password yang sedang digunakan!",
+			"message": err.Error(),
 		})
 	} else {
 		c.JSON(status, gin.H{
 			"user": user,
 		})
 	}
+}
+
+func (h *Handler) Logout(c *gin.Context) {
+	cookie := http.Cookie{
+		Name:     "jwt",
+		Value:    "",
+		Expires:  time.Now().Add(-time.Hour),
+		HttpOnly: true,
+	}
+
+	c.SetCookie(cookie.Name, cookie.Value, int(cookie.Expires.Sub(time.Now().UTC().Round(time.Second)).Seconds()), "/", "", cookie.Secure, cookie.HttpOnly)
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "success",
+	})
 }

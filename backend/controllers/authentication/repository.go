@@ -31,11 +31,11 @@ func (r *repository) Login(req DataRequest) (string, error) {
 	res := r.db.Table("user_Tab").Where("email = ?", req.Email).First(&user)
 	if res.Error != nil {
 		log.Println("Get Data Error : ", res.Error)
-		return "", errors.New("email atau password salah")
+		return "", errors.New("email tidak ditemukan")
 	}
 
 	if user.Password != req.Password {
-		return "", errors.New("email atau password salah")
+		return "", errors.New("password salah")
 	}
 
 	claims := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.StandardClaims{

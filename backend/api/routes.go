@@ -23,6 +23,7 @@ func (s *server) SetupRouter() {
 	authHandler := authentication.NewHandler(authService)
 	s.Router.POST("/login", authHandler.Login)
 	s.Router.GET("/user", authHandler.AuthenticateUser)
+	s.Router.POST("/logout", authHandler.Logout)
 	s.Router.PATCH("/changePassword", authHandler.ChangePassword)
 
 	scRepo := stagingCustomer.NewRepository(s.DB)
