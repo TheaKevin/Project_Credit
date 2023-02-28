@@ -12,9 +12,9 @@ import (
 
 func (s *server) SetupRouter() {
 	s.Router.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"*"},
+		AllowOrigins:     []string{"http://localhost:3000"},
 		AllowMethods:     []string{"POST", "DELETE", "PUT", "GET", "PATCH"},
-		AllowHeaders:     []string{"*"},
+		AllowHeaders:     []string{"Content-Type"},
 		AllowCredentials: true,
 	}))
 
