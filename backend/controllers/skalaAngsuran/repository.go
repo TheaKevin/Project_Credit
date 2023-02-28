@@ -129,6 +129,9 @@ func (r *repository) GenerateSkalaAngsuran() ([]models.CustomerDataTab, error) {
 			}
 		}
 
+		// change customerDataTab Approval Status to 1
+		var customerTemp []models.CustomerDataTab
+		r.db.Model(&customerTemp).Where("custcode = ?", item.Custcode).Update("approval_status", "1")
 	}
 	return customer, nil
 }
