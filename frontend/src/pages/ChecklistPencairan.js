@@ -13,12 +13,14 @@ export const ChecklistPencairan = () => {
     const [activeBranch, setActiveBranch] = useState()
     const [start, setStart] = useState()
     const [end, setEnd] = useState()
+    const [isLoading, setLoading] = useState(false);
     const [checked, setChecked] = useState([])
     useEffect(() => {
         getTransactionData()
     }, [])
 
     const getTransactionData = () => {
+        setLoading(true);
         axios.get("http://localhost:8080/getTransaction").then( (res) => {
             setTransaction(res.data.data)
             setCompany(res.data.company)
@@ -28,7 +30,9 @@ export const ChecklistPencairan = () => {
             setStart(new Date(0))
             setEnd(new Date())
             console.log(res.data.message)
+            setLoading(false);
         })
+        .catch(() => {setLoading(false)})
     }
 
     const checkTransaction = (id, e) => {
@@ -52,6 +56,7 @@ export const ChecklistPencairan = () => {
     }
 
     const updateTransaction = () => {
+        setLoading(true);
         axios.patch('http://localhost:8080/updateTransaction', checked)
         .then(() => {
             Swal.fire({
@@ -62,10 +67,12 @@ export const ChecklistPencairan = () => {
             })
             getTransactionData()
         })
+        .catch(() => {setLoading(false)})
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        setLoading(true);
         axios.get("http://localhost:8080/getTransactionFilter", {
             params: {
                 branch: activeBranch,
@@ -76,7 +83,9 @@ export const ChecklistPencairan = () => {
         }).then( (res) => {
             setTransaction(res.data.data)
             console.log(res.data.message)
+            setLoading(false);
         })
+        .catch(() => {setLoading(false)})
     }
     
     return (
@@ -119,12 +128,12 @@ export const ChecklistPencairan = () => {
                         name='endDate'
                         onChange={(e) => setEnd(new Date(e.target.value))} />
 
-                    <button className='resetButton buttonPrimary' onClick={(e) => {
+                    <button className='resetButton buttonPrimary' disabled={isLoading} onClick={(e) => {
                         e.preventDefault()
                         getTransactionData()
-                    }}>All</button>
+                    }}>{isLoading ? 'Loading…' : 'All'}</button>
 
-                    <button className='submitButton buttonPrimary' type='submit'>Submit</button>
+                    <button className='submitButton buttonPrimary' disabled={isLoading} type='submit'>{isLoading ? 'Loading…' : 'Submit'}</button>
                 </div>
             </Form>
             <Table striped bordered hover responsive>
@@ -163,7 +172,7 @@ export const ChecklistPencairan = () => {
                     }
                 </tbody>
             </Table>
-            <button className='align-self-end buttonPrimary' onClick={() => updateTransaction()}>Approve</button>
+            <button className='align-self-end buttonPrimary' disabled={isLoading} onClick={() => updateTransaction()}>{isLoading ? 'Loading…' : 'Approve'}</button>
         </div>
     )
 }

@@ -13,12 +13,14 @@ export const Laporan = () => {
     const [start, setStart] = useState()
     const [end, setEnd] = useState()
     const [status, setStatus] = useState()
+    const [isLoading, setLoading] = useState(false);
 
     useEffect(() => {
         getReportData()
     }, [])
 
     const getReportData = () => {
+        setLoading(true);
         axios.get("http://localhost:8080/getReport").then( (res) => {
             setReport(res.data.data)
             setCompany(res.data.company)
@@ -29,7 +31,9 @@ export const Laporan = () => {
             setEnd(new Date())
             setStatus(0)
             console.log(res.data.message)
+            setLoading(false);
         })
+        .catch(() => {setLoading(false)})
     }
 
     const handleSubmit = (e) => {
@@ -45,7 +49,9 @@ export const Laporan = () => {
         }).then( (res) => {
             setReport(res.data.data)
             console.log(res.data.message)
+            setLoading(false);
         })
+        .catch(() => {setLoading(false)})
     }
     
     return (
@@ -104,12 +110,12 @@ export const Laporan = () => {
                             onChange={(e) => setEnd(new Date(e.target.value))} />
                     </Form.Group>
                     
-                    <button className='resetButtonLaporan buttonPrimary' onClick={(e) => {
+                    <button className='resetButtonLaporan buttonPrimary' disabled={isLoading} onClick={(e) => {
                         e.preventDefault()
                         getReportData()
-                    }}>All</button>
+                    }}>{isLoading ? 'Loading…' : 'All'}</button>
 
-                    <button className='submitButtonLaporan buttonPrimary' type='submit'>Submit</button>
+                    <button className='submitButtonLaporan buttonPrimary' disabled={isLoading} type='submit'>{isLoading ? 'Loading…' : 'Submit'}</button>
                 </div>
             </Form>
             <Table striped bordered hover responsive>
