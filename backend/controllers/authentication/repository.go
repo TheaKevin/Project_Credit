@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
+	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
 
@@ -34,7 +35,7 @@ func (r *repository) Login(req DataRequest) (string, error) {
 		return "", errors.New("email tidak ditemukan")
 	}
 
-	if user.Password != req.Password {
+	if err := bcrypt.CompareHashAndPassword(user.Password, []byte(req.Password)); err != nil {
 		return "", errors.New("password salah")
 	}
 
@@ -59,10 +60,11 @@ func (r *repository) ChangePassword(pass Password) error {
 		return res.Error
 	}
 
-	if user.Password != pass.OldPassword {
+	if err := bcrypt.CompareHashAndPassword(user.Password, []byte(pass.OldPassword)); err != nil {
 		return errors.New("Password tidak sama")
 	} else {
-		res := r.db.Table("user_Tab").Where("email = ?", pass.Email).Update("password", pass.NewPassword)
+		passwordBaru, _ := bcrypt.GenerateFromPassword([]byte(pass.NewPassword), 14)
+		res := r.db.Table("user_Tab").Where("email = ?", pass.Email).Update("password", passwordBaru)
 		if res.Error != nil {
 			log.Println("Update Data error : ", res.Error)
 			return res.Error
