@@ -17,6 +17,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [isLoggedIn, setLogin] = useState();
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [screenHeight, setScreenHeight] = useState(0);
   const [changePasswordModal, setChangePasswordModal] = useState(false);
   const openChangePasswordModal = () => setChangePasswordModal(true);
@@ -32,7 +33,7 @@ function App() {
           withCredentials: true
         })
         .then(res => {
-          res.status === 200 ? loginSuccess(res.data.user.username) : setLogin(false);
+          res.status === 200 ? loginSuccess(res.data.user.username, res.data.user.email) : setLogin(false);
           setLoading(false)
         })
         .catch(error => {
@@ -45,9 +46,10 @@ function App() {
     )();
   }, [])
 
-  const loginSuccess = (username) => {
+  const loginSuccess = (username, email) => {
     setLogin(true);
-    setName(username)
+    setName(username);
+    setEmail(email)
   }
 
   const handleLogOut = async () => {
@@ -138,7 +140,7 @@ function App() {
               <Route path="/Laporan" element={ <Laporan  /> }/>
             </Routes>
 
-            <ChangePasswordModal closeChangePasswordModal={closeChangePasswordModal} changePasswordModal={changePasswordModal} email={localStorage.getItem("email")} />
+            <ChangePasswordModal closeChangePasswordModal={closeChangePasswordModal} changePasswordModal={changePasswordModal} email={email} />
           </main>
         </HashRouter>
       </div>
